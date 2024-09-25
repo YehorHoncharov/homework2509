@@ -4,7 +4,6 @@
 }
 
 body{
-    /* position: absolute; */
     height: 100%;
     width: 100%;
 }
@@ -16,36 +15,37 @@ header{
     height: 80px;
     background-color: grey;
 }
-main{
-    margin-top: 80px;
-    width: 100vw;
-    height: calc(100vh - 160px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100vw;
-    height: 80px;
-    background-color: grey;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    /* justify-content: center; */
-}
 
 h1{
     text-align: center;
 }
 
-/* a{
+a{
     text-align: center;
-} */
+}
 
-/* p{
+p{
     text-align: center;
-} */
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.post {
+    width: 600px;
+    height: 200px;
+    background-color: pink;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    font-size: 18px;
+}
