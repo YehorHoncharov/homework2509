@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
 
 app.get('/date/', (req, res) => {
     res.sendFile(path.resolve(__dirname, "/templates/date.html"))
+    res.render('date')
     getDate()
 })
 
@@ -50,6 +51,11 @@ app.get('/posts/', (req, res) => {
 //     res.send(`Текущая дата и время: ${currentDate}`);
     
 // });
+
+app.get('/user/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "./templates/user.html"));
+    res.render('user')
+})
 
 app.listen(PORT, HOST, () =>{
     console.log("http://localhost:8000")
