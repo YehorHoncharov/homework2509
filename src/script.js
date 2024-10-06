@@ -43,6 +43,8 @@ app.set('views', path.join(__dirname, 'templates'))
 
 app.use('/static/', express.static(path.join(__dirname, 'static')))
 
+app.use(express.json()) 
+
 function getDate(){
     console.log(moment().format("YYYY/MM/DD hh:mm:ss"))
 }
@@ -99,6 +101,15 @@ app.get('/post/:id', (req, res) => {
 //     res.send(`Текущая дата и время: ${currentDate}`);
     
 // });
+
+
+app.post('/post/create', (req, res) => {
+    const data = req.body
+    console.log(data)
+    posts.push(data)
+    res.send('okey');
+})
+
 
 app.get('/user/', (req, res) => {
     res.sendFile(path.resolve(__dirname, "./templates/user.html"));
