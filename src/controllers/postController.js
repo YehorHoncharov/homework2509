@@ -1,4 +1,5 @@
 const postService = require('../services/postService')
+const moment = require("moment")
 
 function getAllPosts(req, res) {
     const context = postService.getAllPosts()
@@ -23,8 +24,11 @@ function createPost(req, res) {
     res.send('okey');
 }
 
-function getDate(){
+function getDate(req, res){
     console.log(moment().format("YYYY/MM/DD hh:mm:ss"))
+    // res.send('hello world')
+    res.render('date')
+    // getDate()
 }
 
 function User(req, res) {

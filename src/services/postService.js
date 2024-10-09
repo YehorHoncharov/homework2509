@@ -59,9 +59,10 @@ function createPost(data){
 }
 
 function getDate(req, res) {
-    res.render('date')
-    getDate()
-}
+        console.log(moment().format("YYYY/MM/DD hh:mm:ss"))
+        getDate()
+        res.render('date')
+    }
 
 module.exports = {
     getAllPosts: getAllPosts,
