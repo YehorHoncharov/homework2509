@@ -1,3 +1,5 @@
+const { now } = require("moment")
+
 const posts = [
     {
         "name": 'Фото дня',

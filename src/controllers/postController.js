@@ -26,9 +26,7 @@ function createPost(req, res) {
 
 function getDate(req, res){
     console.log(moment().format("YYYY/MM/DD hh:mm:ss"))
-    // res.send('hello world')
     res.render('date')
-    // getDate()
 }
 
 function User(req, res) {
