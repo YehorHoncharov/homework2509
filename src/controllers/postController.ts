@@ -9,7 +9,7 @@ interface Post {
 
 
 function getAllPosts(req: Request, res: Response): void {
-    const context = postService.getAllPosts();
+    const context = postService.getAllPosts(req, res);
     res.render('posts', context);
 }
 
