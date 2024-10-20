@@ -19,8 +19,7 @@ async function createPost(){
             description: "Post description",
             src: "https://example.com/image.png",
             author: "король ещкере",
-            date: new Date(),
-            // category: "Category name",
+            date: new Date()
         }
     });
     console.log(newPost)
@@ -33,9 +32,7 @@ async function createManyPosts(){
             description: "Post description",
             src: "https://example.com/image.png",
             author: "король ещкере",
-            date: new Date(),
-            // category: "Category name",
-            postId: 1  
+            date: new Date()
         }
         })
     console.log(createManyPosts)
