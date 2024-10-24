@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import postService from '../services/postService';
+import postService from './postService';
 import moment from 'moment';
 
 interface Post {
@@ -8,27 +8,26 @@ interface Post {
 }
 
 
-function getAllPosts(req: Request, res: Response): void {
-    const context = postService.getAllPosts(req, res);
+async function getAllPosts(req: Request, res: Response) {
+    const max  = Number(req.query.max)
+    const context = await postService.getAllPosts(req, res, max)
     res.render('posts', context);
 }
 
-function getPostById(req: Request, res: Response): void {
+async function getPostById(req: Request, res: Response) {
     const id = parseInt(req.params.id, 10);
-    // const id = req.params.id;
-    const data = postService.getPostById(id);
-    // const data: Post[] = postService.getPostById(id);
-
-    if (id <= data.length) { //ошибка
+    const data = await postService.getPostById(id);
+    if (id <= data.length) { 
         res.render('post', data.context);
     } else {
         res.send('таких постов нет');
     }
 }
 
-function createPost(req: Request, res: Response): void {
+async function createPost(req: Request, res: Response) {
     const data = req.body;
-    postService.createPost(data);
+    // postService.createPost(data);
+    const context = await postService.createPost(data)
     res.send('okey');
 }
 

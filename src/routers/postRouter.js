@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var postController_1 = require("../controllers/postController");
+var router = express_1.default.Router();
+router.get('/all', function (req, res) { return postController_1.default.getAllPosts(req, res); });
+router.get('/date', function (req, res) { return postController_1.default.getDate(req, res); });
+router.get('/user', function (req, res) { return postController_1.default.User(req, res); });
+router.get('/:id', function (req, res) { return postController_1.default.getPostById(req, res); });
+router.post('/create', function (req, res) { return postController_1.default.createPost(req, res); });
+exports.default = router;
