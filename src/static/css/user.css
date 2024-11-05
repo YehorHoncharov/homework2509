@@ -1,0 +1,30 @@
+body {
+    background-color: aquamarine;
+    height: 100%;
+    width: 100%;
+}
+
+form {
+    border: 2px solid black;
+    height: 21px;
+    width: 430px;
+    background-color: blue;
+}
+#email {
+    background-color: aqua;
+}
+input {
+    border: 2px solid black;
+    border-radius: 10%;
+}
+
+#password {
+    background-color: red;
+}
+
+#submitButton {
+    border: 2px solid black;
+    border-radius: 1cm;
+    color: white;
+    background-color: blueviolet;
+}

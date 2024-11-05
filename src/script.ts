@@ -1,35 +1,42 @@
-import moment from 'moment';
-import express, { Request, Response } from 'express';
-import path from 'path';
-import postRouter from './PostApp/postRouter';
+import express, { Express, Request, Response } from 'express'
+import { join } from 'path'
+import moment from 'moment'
+import { router } from './PostApp/postRouter'
+import userRouter from './UserApp/userRouter'
+import cookieParser from 'cookie-parser'
 
-const app = express();
 
-app.set('view engine', 'ejs');
-// устанавливаем папку с шаблонами для ejs
-app.set('views', path.join(__dirname, 'templates'));
+const app: Express = express()
 
-// подключаем статические файлы
-app.use('/static/', express.static(path.join(__dirname, 'static')));
+const PORT = 8000
+const HOST = 'localhost'
+app.set("view engine", "ejs")
+app.set("views", join(__dirname, 'templates'))
+app.use('/static/', express.static(join(__dirname, 'static')))
+app.use(express.json())
+app.use(cookieParser())
+app.use('/post/', router)
+app.use('/', userRouter)
 
-// для парсинга JSON
-app.use(express.json());
+function getDate(){
+    console.log(moment().format("YYYY/MM/DD hh:mm:ss"))
+}
 
-// роут для обработки запросов к постам
-app.use('/post/', postRouter);
 
 app.get('/', (req: Request, res: Response) => {
-  // res.sendFile(path.resolve(__dirname, "./templates/index.html"))
-  const context = {
-    // words: ['hello', 'world', 'rinat']
-    title: 'posts of the day',
-  };
-  res.render('index', context);
-});
+    res.render('index')
+})
 
-const PORT = 8000;
-const HOST = 'localhost';
+app.get('/date/', (req: Request, res: Response) => {
+    res.render('date')
+    getDate()
+})
 
-app.listen(PORT, HOST, () => {
-  console.log("http://localhost:8000")
-});
+app.get('/user/', (req: Request, res: Response) => {
+    res.render("user")
+})
+
+
+app.listen(PORT, HOST, () =>{
+    console.log("http://localhost:8000")
+})

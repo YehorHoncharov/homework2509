@@ -7,4 +7,7 @@ model Post {
   date        DateTime
 
   comments Comment[]
+
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
 }

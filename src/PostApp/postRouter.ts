@@ -1,17 +1,15 @@
-import express, { Request, Response, Router } from 'express';
-import postController from './postController';
+import { Router } from 'express'
+import { getAllPosts, getPostById, createPost } from './postController'
+import { authMiddleware } from '../middlewares/authMiddleware'
+import { userRoleMiddleware } from '../middlewares/userRoleMiddleware'
 
-const router: Router = express.Router();
+const router = Router()
 
 
-router.get('/all',  postController.getAllPosts);
+router.get("/all", getAllPosts)
 
-router.get('/date',  postController.getDate);
+router.get("/:id", getPostById)
 
-router.get('/user',  postController.User);
+router.post('/create', authMiddleware, userRoleMiddleware, createPost)
 
-router.get('/:id',  postController.getPostById);
-
-router.post('/create',  postController.createPost);
-
-export default router;
+export { router }
