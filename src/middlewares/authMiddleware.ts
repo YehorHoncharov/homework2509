@@ -1,4 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
+import { verify } from 'jsonwebtoken';
+import { SECRET_KEY } from '../config/token';
 
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction){
@@ -9,6 +11,13 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction){
             console.log("user authenticated")
             next()
         }
+    } else {
+        res.sendStatus(401)
+    }
+    if (cookies.token){
+        const token = verify(cookies.token, SECRET_KEY)
+        res.locals.user = token
+        next()
     } else {
         res.sendStatus(401)
     }

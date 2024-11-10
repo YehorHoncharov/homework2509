@@ -19,7 +19,8 @@ async function createPost(){
             description: "Post description",
             src: "https://example.com/image.png",
             author: "король ещкере",
-            date: new Date()
+            date: new Date(),
+            userId: 0
         }
     });
     console.log(newPost)
@@ -32,7 +33,8 @@ async function createManyPosts(){
             description: "Post description",
             src: "https://example.com/image.png",
             author: "король ещкере",
-            date: new Date()
+            date: new Date(),
+            userId: 0
         }
         })
     console.log(createManyPosts)
@@ -85,7 +87,8 @@ async function createComment() {
             content: "new commentariy",
             postId: 1, 
             title: "new comment",
-            body: "new comment"
+            body: "new comment",
+            userId: 0
         }
     });
     console.log(comment);
@@ -98,12 +101,14 @@ async function createManyComments() {
             {
                 content: "commetrariy 1", postId: 1,
                 title: 'йоу',
-                body: 'йоу'
+                body: 'йоу',
+                userId: 0
             },
             {
                 content: "commentariy 2", postId: 1,
                 title: 'йоу',
-                body: 'йоу'
+                body: 'йоу',
+                userId: 0
             }
         ]
     });
