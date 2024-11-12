@@ -67,6 +67,8 @@ async function createUser(data: Prisma.UserCreateInput){
     }
 }
 
+
+
 const userRepository = {
     findUserByEmail: findUserByEmail,
     createUser: createUser

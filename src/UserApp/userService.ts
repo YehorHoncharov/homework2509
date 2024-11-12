@@ -3,6 +3,22 @@ import userRepository from "./userRepository"
 import * as bcrypt from 'bcrypt';
 
 
+interface IUserError{
+    status: 'error',
+    message: string
+}
+
+interface IUserSuccess{
+    status: 'success',
+    data?: {
+        id: number,
+        username: string,
+        email: string,
+        password: string
+    },
+    message?: string
+}
+
 const ComparePassword = async (hash: string, password: string): Promise<boolean> => {
     const isMatch = await bcrypt.compare(password, hash);
     return isMatch;
@@ -25,10 +41,10 @@ async function findUserByEmail(email: string, password: string){
     }
 }
 
-async function createUser(data: {username:string, email:string, password:string}){
+async function createUser(data: {username:string, email:string, password:string}): Promise< IUserError | IUserSuccess >{
     const user: any = await userRepository.findUserByEmail(data.email)
 
-    if (user == "Not found"){
+    if (!user){
         const full_data = {...data, role:"user"}
         const created_user: any = await userRepository.createUser(full_data)
         const data_return = {
@@ -37,10 +53,10 @@ async function createUser(data: {username:string, email:string, password:string}
             role: created_user.role
         }
         
-        return data_return
+        return {status: 'error', message: 'user not found'}
 
     } else {
-        return "user exists"
+        return {status: 'success', message: "user exists"}
     }
     
 }

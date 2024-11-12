@@ -1,6 +1,13 @@
 import { Prisma } from '@prisma/client'
 import postRepository from "./postRepository"
 
+type Post = {
+    name: string;
+    author: string;
+    text: string;
+}
+
+
 const posts = [
     {
         name: 'Why JavaScript is still popular?',
