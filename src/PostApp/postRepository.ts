@@ -1,11 +1,9 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma} from '@prisma/client';
 import client from '../client/prismaClient';
 
 async function getAllPosts(){
     try{
-        let posts = await client.post.findMany({
-        
-        })
+        let posts = await client.post.findMany()
         return posts
     } catch(err){
         if (err instanceof Prisma.PrismaClientKnownRequestError){
@@ -20,8 +18,9 @@ async function getAllPosts(){
 
 async function getPostById(id: number) {
     try {
+        console.log(id)
         let post = await client.post.findUnique({
-            where: {id: id}
+            where: {id: 1}
         });
         return post;
     } catch (err) {
@@ -106,6 +105,25 @@ async function getPostsCount(){
         return 0
     }
 }
+
+
+export async function getAllPostsWithComments() {
+    return await client.post.findMany({
+        include: {
+            comments: true, 
+        },
+    });
+}
+
+export async function getPostWithComments(postId: number) {
+    return await client.post.findUnique({
+        where: { id: postId },
+        include: {
+            comments: true,
+        },
+    });
+}
+
 
 const postRepository = {
     getAllPosts:getAllPosts,

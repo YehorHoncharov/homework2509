@@ -22,7 +22,6 @@ function getDate(){
     console.log(moment().format("YYYY/MM/DD hh:mm:ss"))
 }
 
-
 app.get('/', (req: Request, res: Response) => {
     res.render('index')
 })
@@ -30,6 +29,7 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/date/', (req: Request, res: Response) => {
     res.render('date')
     getDate()
+    
 })
 
 app.get('/user/', (req: Request, res: Response) => {

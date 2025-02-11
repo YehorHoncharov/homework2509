@@ -2,21 +2,18 @@ import { Prisma } from '@prisma/client'
 import userRepository from "./userRepository"
 import * as bcrypt from 'bcrypt';
 
+type User = Prisma.UserGetPayload<{}>
 
 interface IUserError{
     status: 'error',
     message: string
 }
 
+
 interface IUserSuccess{
     status: 'success',
-    data?: {
-        id: number,
-        username: string,
-        email: string,
-        password: string
-    },
-    message?: string
+    data?: User,
+    message: string
 }
 
 const ComparePassword = async (hash: string, password: string): Promise<boolean> => {

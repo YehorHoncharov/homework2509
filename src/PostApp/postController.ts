@@ -1,28 +1,45 @@
-import { Request, Response } from 'express'
-import { getAllPosts as getAllPostsService, getPostById as getPostByIdService, createPost as createPostService} from './postService'
+// const productService = require('../services/productService')
+import postService from "./postService"
 
-async function getAllPosts(req: Request, res: Response){
-    const context = await getAllPostsService()
-    res.render('posts', context)
-}
+import express, { Express, Request, Response } from 'express'
 
-async function getPostById(req: Request, res: Response){
-    const id: string = req.params.id
-    const data = await getPostByIdService(parseInt(id))
 
-    if (data.context.post === null || data.context.post === undefined){
-        res.render("incorrect_post")
-        
-    } else {
-        res.render('post', data.context)
+async function getAllPosts(req:Request, res:Response) {
+    const context = await postService.getAllPosts()
+    if (context.status == "error"){
+        res.send("error")
+    } else{
+        res.render('posts', {posts: context.data})
     }
-
 }
 
-async function createPost(req: Request, res: Response){
+async function getPostById(req:Request, res:Response){
+    let id = req.params.id
+    const result = await postService.getPostById(+id)
+    if (result.status == "error"){
+        res.send("ban")
+    } else{
+        res.render('post', {post: result.data})
+    }
+}
+// 
+async function createPost(req:Request, res:Response){
     const data = req.body
-    await createPostService(data)
-    res.send('Your post was succesfully published.')
+    console.log(data)
+    
+    const result = await postService.createPost(data);
+    if (result.status == 'error'){
+        res.send('error');
+    } else {
+        res.send('ok')
+    }
 }
 
-export { getAllPosts, getPostById, createPost }
+
+const postControllers = {
+    getAllPosts: getAllPosts,
+    getPostById: getPostById,
+    createPost: createPost
+}
+
+export default postControllers

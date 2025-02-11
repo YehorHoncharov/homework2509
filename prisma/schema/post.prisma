@@ -4,10 +4,11 @@ model Post {
   description String
   src         String
   author      String
-  date        DateTime
+  // date        DateTime
+  date        String
 
   comments Comment[]
 
-  User   User @relation(fields: [userId], references: [id])
-  userId Int
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }

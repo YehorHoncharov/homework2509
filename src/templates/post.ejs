@@ -6,22 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <div class="post-card">
-            <h1><%= post.name %></h1>
-            <p><%= post.description %></p>
-            <img src="<%= post.src %>" alt="">
-            <p>Автор: <%= post.author %></p>
-            <p>Дата публикации: <%= post.date %></p>
-    </div>
-    <h1>POsts list</h1>
-    <% posts.forEach((post) => { %>
-        <h3><%= post.name %></h1>
-            <p><%= post.description %></p>
-            <img src="<%= post.src %>" alt="">
-            <p>Автор: <%= post.author %></p>
-            <p>Дата публикации: <%= post.date %></p>
-   <% }) %>
+    <h3><%= post.name %></h1>
+    <p><%= post.description %></p>
+    <img src="<%= post.src %>" alt="">
+    <p>Автор: <%= post.author %></p>
+    <p>Дата публикации: <%= post.date %></p>
    <button id='button' type="button">Create post</button>
 </body>
 </html>

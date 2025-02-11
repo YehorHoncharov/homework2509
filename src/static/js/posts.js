@@ -1,19 +1,20 @@
+button = document.querySelector("button");
 
-const button = document.querySelector('#button')
-
-button.addEventListener('click', () => {
+button.addEventListener('click', (event) => {
+    const date = new Date();
     fetch('/post/create', {
-
         method: 'POST',
-
         body: JSON.stringify({
-            name: 'ПОСТіііі',
-            src: 'https://www.spcdn.org/blog/wp-content/uploads/2021/05/Photo-of-the-day.png',
-            price: '1000$',
-            description: 'post created',
+            name: 'New Post',
+            author: 'Author',
+            description: 'desc',
+            time: `${date.getHours()}:${date.getMinutes()}`,
+            userId: 1
+
         }),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json'  
         }
     })
+    window.location.reload();
 })

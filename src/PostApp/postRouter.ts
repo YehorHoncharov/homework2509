@@ -1,15 +1,14 @@
 import { Router } from 'express'
-import { getAllPosts, getPostById, createPost } from './postController'
 import { authMiddleware } from '../middlewares/authMiddleware'
 import { userRoleMiddleware } from '../middlewares/userRoleMiddleware'
-
+import postControllers from './postController'
 const router = Router()
 
 
-router.get("/all", getAllPosts)
+router.get("/all", postControllers.getAllPosts)
 
-router.get("/:id", getPostById)
+router.get("/:id", postControllers.getPostById)
 
-router.post('/create', authMiddleware, userRoleMiddleware, createPost)
+router.post('/create', authMiddleware, userRoleMiddleware, postControllers.createPost)
 
 export { router }

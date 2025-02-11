@@ -19,26 +19,25 @@ async function createPost(){
             description: "Post description",
             src: "https://example.com/image.png",
             author: "король ещкере",
-            date: new Date(),
-            userId: 0
+            date: "14:20",
         }
     });
     console.log(newPost)
 }
 // СОЗДАНИЕ МНОЖЕСТВА ПОСТОВ
-async function createManyPosts(){
-    const createManyPosts = await prisma.post.createMany({
-        data: {
-            name: "ещкерре",
-            description: "Post description",
-            src: "https://example.com/image.png",
-            author: "король ещкере",
-            date: new Date(),
-            userId: 0
-        }
-        })
-    console.log(createManyPosts)
+async function createManyPosts() {
+    const posts = await prisma.post.createMany({
+        data: [
+            { name: 'New Post', description: 'desc', src: 'https://icf.listex.info/med/fc8729f1-8c87-5282-e6b2-70a8dc819984.jpg', author: 'Author', date: "14:30"},
+            { name: 'New Post', description: 'desc', src: 'https://icf.listex.info/med/fc8729f1-8c87-5282-e6b2-70a8dc819984.jpg', author: 'Author', date: "14:30"},
+            { name: 'New Post', description: 'desc', src: 'https://icf.listex.info/med/fc8729f1-8c87-5282-e6b2-70a8dc819984.jpg', author: 'Author', date: "14:30"},
+            { name: 'New Post', description: 'desc', src: 'https://icf.listex.info/med/fc8729f1-8c87-5282-e6b2-70a8dc819984.jpg', author: 'Author', date: "14:30"},
+        ]
+    })
+    console.log(posts) 
 }
+
+
 // УДАЛЕНИЕ ПОСТА
 async function deletePost() {
     const post = await prisma.post.delete({
@@ -72,11 +71,8 @@ async function findPost() {
 }
 // ПОИСК МНОЖЕСТВА ПОСТОВ И ПОЛУЧЕНИЯ
 async function findManyPosts() {
-    const post = await prisma.post.findMany({
-        where: {
-            id: 1
-        }
-    })
+    const post = await prisma.post.findMany()
+    return post
     console.log(post)
 }
 
@@ -84,11 +80,10 @@ async function findManyPosts() {
 async function createComment() {
     const comment = await prisma.comment.create({
         data: {
-            content: "new commentariy",
-            postId: 1, 
-            title: "new comment",
-            body: "new comment",
-            userId: 0
+                headline: 'vtug',
+                body: 'bfofby',
+                postId: 1,
+                userId: 1
         }
     });
     console.log(comment);
@@ -98,18 +93,9 @@ async function createComment() {
 async function createManyComments() {
     const createManyComments = await prisma.comment.createMany({
         data: [
-            {
-                content: "commetrariy 1", postId: 1,
-                title: 'йоу',
-                body: 'йоу',
-                userId: 0
-            },
-            {
-                content: "commentariy 2", postId: 1,
-                title: 'йоу',
-                body: 'йоу',
-                userId: 0
-            }
+            { headline: 'headline1', body: 'body', postId: 1, userId: 1},
+            { headline: 'headline2', body: 'body', postId: 1, userId: 1},
+            { headline: 'headline3', body: 'body', postId: 1, userId: 1}
         ]
     });
     console.log(createManyComments);
@@ -168,7 +154,7 @@ async function updateComment() {
             id: 1
         },
         data: {
-            content: "update commentariy"
+            headline: "update commentariy"
         }
     });
     console.log(updatedComment);
@@ -176,19 +162,20 @@ async function updateComment() {
 
 
 async function main() {
-    await createPost()
+    // await createPost()
     await createManyPosts()
-    await findPost()
-    await findManyPosts()
-    await updatePost()
-    await deletePost()
-    await createComment()
-    await createManyComments()
-    await deleteComment()
-    await findCommentById()
-    await findCommentWithPost()
-    await findPostWithComments()
-    await updateComment()
+    // await findPost()
+    // const posts = await findManyPosts();
+    // await console.log(posts.length)
+    // await updatePost()
+    // await deletePost()
+    // await createComment()
+    // await createManyComments()
+    // await deleteComment()
+    // await findCommentById()
+    // await findCommentWithPost()
+    // await findPostWithComments()
+    // await updateComment()
 
 }
 

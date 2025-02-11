@@ -1,52 +1,55 @@
 import { Prisma } from '@prisma/client'
 import postRepository from "./postRepository"
 
-type Post = {
-    name: string;
-    author: string;
-    text: string;
+type Post = Prisma.PostGetPayload<{}>
+
+interface IPostError{
+    status: 'error',
+    message: string
+}
+
+interface IPostsSuccess{
+    status: 'success',
+    data: Post[]
+}
+
+interface IPostSuccess{
+    status: 'success',
+    data: Post
+}
+
+async function getAllPosts(): Promise<IPostsSuccess | IPostError> {
+    const posts = await postRepository.getAllPosts()
+
+    if(!posts){
+        return{status: 'error', message: 'posts not found'}
+    }
+    return {status: 'success', data: posts}
+}
+
+async function getPostById(id: number): Promise<IPostSuccess | IPostError> {
+    const post = await postRepository.getPostById(id)
+    
+    if (!post) {
+        return {status: 'error', message: 'post not found'}
+    }
+    return {status: 'success', data: post}
+}
+
+async function createPost(data: Prisma.PostCreateInput): Promise< IPostSuccess | IPostError >{
+    let post_create = await postRepository.createPost(data);
+    if (!post_create){
+        return {status: "error", message: "post create error"}
+    }
+
+    return {status: "success", data: post_create}
 }
 
 
-const posts = [
-    {
-        name: 'Why JavaScript is still popular?',
-        author: 'Alexey',
-        text: "JavaScript remains essential due to its versatility in web development."
-    },
-    {
-        name: 'How to improve CSS skills?',
-        author: 'Natasha',
-        text: 'Mastering CSS Grid and Flexbox can greatly enhance your layout skills.'
-    },
-    {
-        name: 'Best skincare products for winter',
-        author: "Elena",
-        text: 'Check out these top products to keep your skin hydrated during cold months.'
-    }
-];
+const postService = {
+    getAllPosts: getAllPosts,
+    getPostById: getPostById,
+    createPost: createPost
+} 
 
-
-
-async function getAllPosts(){
-    const context = {
-        posts: await postRepository.getAllPosts()
-    }
-    return context
-}
-
-async function getPostById(id: number){
-    const context = {
-        post: await postRepository.getPostById(id)
-    }
-
-    return {
-        context: context
-    }
-}
-
-async function createPost(data:Prisma.PostCreateInput){
-    await postRepository.createPost(data)
-}
-
-export { getAllPosts, getPostById, createPost }
+export default postService

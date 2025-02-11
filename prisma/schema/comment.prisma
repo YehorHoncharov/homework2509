@@ -1,12 +1,12 @@
 model Comment {
   id       Int     @id @default(autoincrement())
-  title    String
-  body     String
-  imageUrl String?
-  content  String
+  headline String 
+  body     String 
+  src      String? 
+  
   post     Post    @relation(fields: [postId], references: [id])
-  postId   Int
-
-  User   User @relation(fields: [userId], references: [id])
-  userId Int
+  postId   Int 
+  
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int 
 }
