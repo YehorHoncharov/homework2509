@@ -20,12 +20,12 @@ function Error(error: unknown){
 }
 
 
-async function createCommentToPost(postId: number){
+async function createCommentToPost(postId: number, data: Prisma.CommentCreateInput){
     try{
         let comment = client.comment.create({
             data: {
-                headline: 'New Comment',
-                body: "Comment text",
+                headline: 'comment',
+                body: "text body",
                 
                 postId: postId,
                 userId: 1,

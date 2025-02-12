@@ -24,24 +24,42 @@ interface ICommentError{
     message: string
 }
 
-async function createCommentToPost(postId: number): Promise< ICommentSuccess | ICommentError >{
-    let comment = await commentRepository.createCommentToPost(postId);
-    if (!comment){
-        return {status: "error", message: "Couldn't create a comment"}
+import {Prisma} from '@prisma/client'
+
+async function getCommentsByPostId(postId: number) {
+    const context = {
+        comments: await commentRepository.getCommentsByPostId(postId)
     }
-    return {status: "success", data: comment}
-}
 
-async function getCommentsByPostId(postId: number): Promise< ICommentsSuccess | ICommentError >{
-    let comments = await commentRepository.getCommentsByPostId(postId);
-    if (!comments){
-        return {status: "error", message: "Comments Not Found"}
+    if (context.comments){
+        return context
+    }else {
+        return undefined
     }
-    return {status: "success", data: comments}
+    
 }
 
+async function getCommentsByUserId(postId: number) {
+    const context = {
+        comments: await commentRepository.getCommentsByPostId(postId)
+    }
 
-export const commentService = {
-    createCommentToPost: createCommentToPost,
-    getCommentsByPostId: getCommentsByPostId
+    if (context.comments){
+        return context
+    }else {
+        return undefined
+    }
+    
 }
+
+async function createCommentForPost(postId: number, data: Prisma.CommentCreateInput){
+    await commentRepository.createCommentToPost(postId, data)
+}
+
+const commentService = {
+    getCommentsByPostId: getCommentsByPostId,
+    getCommentsByUserId: getCommentsByUserId, 
+    createCommentForPost: createCommentForPost,
+}
+
+export default commentService
