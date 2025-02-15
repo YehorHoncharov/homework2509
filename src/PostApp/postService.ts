@@ -1,24 +1,9 @@
-import { Prisma } from '@prisma/client'
+import { Post, Prisma } from '@prisma/client'
 import postRepository from "./postRepository"
+import { IError, ISuccess } from '../globalTypes/globalTypes'
 
-type Post = Prisma.PostGetPayload<{}>
 
-interface IPostError{
-    status: 'error',
-    message: string
-}
-
-interface IPostsSuccess{
-    status: 'success',
-    data: Post[]
-}
-
-interface IPostSuccess{
-    status: 'success',
-    data: Post
-}
-
-async function getAllPosts(): Promise<IPostsSuccess | IPostError> {
+async function getAllPosts(): Promise<ISuccess<Post[]> | IError> {
     const posts = await postRepository.getAllPosts()
 
     if(!posts){
@@ -27,7 +12,7 @@ async function getAllPosts(): Promise<IPostsSuccess | IPostError> {
     return {status: 'success', data: posts}
 }
 
-async function getPostById(id: number): Promise<IPostSuccess | IPostError> {
+async function getPostById(id: number): Promise<ISuccess<Post> | IError> {
     const post = await postRepository.getPostById(id)
     
     if (!post) {
@@ -36,7 +21,7 @@ async function getPostById(id: number): Promise<IPostSuccess | IPostError> {
     return {status: 'success', data: post}
 }
 
-async function createPost(data: Prisma.PostCreateInput): Promise< IPostSuccess | IPostError >{
+async function createPost(data: Prisma.PostCreateInput): Promise< ISuccess<Post> | IError >{
     let post_create = await postRepository.createPost(data);
     if (!post_create){
         return {status: "error", message: "post create error"}

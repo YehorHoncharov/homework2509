@@ -1,30 +1,7 @@
 import { commentRepository } from "./commentRepository";
 
-interface IComment{
-    id: number,
-    headline: string,
-    body: string,
-    src: string | null, 
-    postId: number, 
-    userId: number 
-}
-
-interface ICommentSuccess{
-    status: "success",
-    data: IComment
-}
-
-interface ICommentsSuccess{
-    status: "success",
-    data: IComment[]
-}
-
-interface ICommentError{
-    status: "error",
-    message: string
-}
-
 import {Prisma} from '@prisma/client'
+import { CreateComment } from "./types";
 
 async function getCommentsByPostId(postId: number) {
     const context = {
@@ -52,7 +29,7 @@ async function getCommentsByUserId(postId: number) {
     
 }
 
-async function createCommentForPost(postId: number, data: Prisma.CommentCreateInput){
+async function createCommentForPost(postId: number, data: CreateComment){
     await commentRepository.createCommentToPost(postId, data)
 }
 

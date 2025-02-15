@@ -1,20 +1,15 @@
 import { Prisma } from '@prisma/client'
 import userRepository from "./userRepository"
 import * as bcrypt from 'bcrypt';
-
-type User = Prisma.UserGetPayload<{}>
-
-interface IUserError{
-    status: 'error',
-    message: string
-}
+import {User} from './types'
+import { IError, ISuccess } from '../globalTypes/globalTypes';
 
 
-interface IUserSuccess{
-    status: 'success',
-    data?: User,
-    message: string
-}
+// interface IUserSuccess{
+//     status: 'success',
+//     data?: User,
+//     message: string
+// }
 
 const ComparePassword = async (hash: string, password: string): Promise<boolean> => {
     const isMatch = await bcrypt.compare(password, hash);
@@ -38,7 +33,7 @@ async function findUserByEmail(email: string, password: string){
     }
 }
 
-async function createUser(data: {username:string, email:string, password:string}): Promise< IUserError | IUserSuccess >{
+async function createUser(data: {username:string, email:string, password:string}): Promise< IError | ISuccess<User> >{
     const user: any = await userRepository.findUserByEmail(data.email)
 
     if (!user){
