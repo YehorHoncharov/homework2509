@@ -35,11 +35,23 @@ async function createPost(req:Request, res:Response){
     }
 }
 
+async function getPostWithComments(req:Request, res:Response){
+    const comment = req.body.comment
+    const data = await postService.getPostWithComments(comment)
+
+    if (data.status == 'error'){
+        res.send('error');
+    } else {
+        res.send('ok')
+    }
+}
+
 
 const postControllers = {
     getAllPosts: getAllPosts,
     getPostById: getPostById,
-    createPost: createPost
+    createPost: createPost,
+    getPostWithComments: getPostWithComments
 }
 
 export default postControllers

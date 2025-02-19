@@ -4,7 +4,6 @@ model Post {
   description String
   src         String
   author      String
-  // date        DateTime
   date        String
 
   comments Comment[]

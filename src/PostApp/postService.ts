@@ -1,6 +1,7 @@
 import { Post, Prisma } from '@prisma/client'
 import postRepository from "./postRepository"
 import { IError, ISuccess } from '../globalTypes/globalTypes'
+import { createPost, PostWithComment } from './types'
 
 
 async function getAllPosts(): Promise<ISuccess<Post[]> | IError> {
@@ -21,7 +22,7 @@ async function getPostById(id: number): Promise<ISuccess<Post> | IError> {
     return {status: 'success', data: post}
 }
 
-async function createPost(data: Prisma.PostCreateInput): Promise< ISuccess<Post> | IError >{
+async function createPost(data: createPost): Promise< ISuccess<Post> | IError >{
     let post_create = await postRepository.createPost(data);
     if (!post_create){
         return {status: "error", message: "post create error"}
@@ -30,11 +31,19 @@ async function createPost(data: Prisma.PostCreateInput): Promise< ISuccess<Post>
     return {status: "success", data: post_create}
 }
 
+async function getPostWithComments(postId: number): Promise< ISuccess<Post> | IError >{
+    let postwithcomment = await postRepository.getPostWithComments(postId)
+    if (!postwithcomment){
+        return {status: "error", message: "error"}
+    }
+    return {status: "success", data: postwithcomment}
+}
 
 const postService = {
     getAllPosts: getAllPosts,
     getPostById: getPostById,
-    createPost: createPost
+    createPost: createPost,
+    getPostWithComments: getPostWithComments
 } 
 
 export default postService

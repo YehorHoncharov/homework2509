@@ -130,5 +130,6 @@ const postRepository = {
     getPostById:getPostById,
     createPost:createPost,
     getPostsCount:getPostsCount,
+    getPostWithComments: getPostWithComments
 }
 export default postRepository
