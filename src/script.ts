@@ -6,6 +6,8 @@ import userRouter from './UserApp/userRouter'
 import cookieParser from 'cookie-parser'
 import cors from "cors"
 import postRouterApi from './PostApp/postRouterApi'
+import categoryService from './CategoryApp/categoryService'
+import categoryRouter from './CategoryApp/categoryRouter'
 
 
 const app: Express = express()
@@ -22,6 +24,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/post/', router)
 app.use('/api/post/', postRouterApi)
+app.use('/api/category/', categoryRouter)
 app.use('/', userRouter)
 
 

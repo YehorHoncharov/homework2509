@@ -1,4 +1,3 @@
-import { Comment } from './../CommentApp/types';
 import { Prisma } from "@prisma/client";
 
 export type Post = Prisma.PostGetPayload<{}>

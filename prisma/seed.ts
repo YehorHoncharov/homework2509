@@ -1,3 +1,4 @@
+import { Comment } from './../src/CommentApp/types';
 import { PrismaClient } from '@prisma/client';
 import { isDate } from 'moment';
 
@@ -6,7 +7,7 @@ const prisma = new PrismaClient()
 async function createOneCategory(){
     const category = await prisma.category.create({
         data: {
-            name: 'Keyboards'
+            name: 'first category'
         }
     })
 }
@@ -76,107 +77,123 @@ async function findManyPosts() {
     console.log(post)
 }
 
-// Создание комментария 
-async function createComment() {
+
+
+
+async function createComment(){
     const comment = await prisma.comment.create({
         data: {
-                headline: 'vtug',
-                body: 'bfofby',
-                postId: 1,
-                userId: 1
+            body: "zxczxczxc",
+            userId: 3,
+            title: "Coment1",
+            postId: 3
         }
-    });
-    console.log(comment);
+    })
+    console.log(comment)
 }
 
-// Создание множества комментариев
-async function createManyComments() {
-    const createManyComments = await prisma.comment.createMany({
+async function createManyComments(){
+
+    const comments = await prisma.comment.createMany({
         data: [
-            { headline: 'headline1', body: 'body', postId: 1, userId: 1},
-            { headline: 'headline2', body: 'body', postId: 1, userId: 1},
-            { headline: 'headline3', body: 'body', postId: 1, userId: 1}
+            {
+                userId: 1,
+                body: "Я борат",
+                title: " я в казахстане",
+                postId: 1
+            },
+            {
+                userId: 1,
+                body: "тили тили бом",
+                title: "закрой глза скорее",
+                postId: 1
+            }
+
         ]
-    });
-    console.log(createManyComments);
+    })
+    console.log(comments)
 }
 
-// Удаление комментария
 async function deleteComment() {
-    const deleteComment = await prisma.comment.delete({
+    const comment = await prisma.comment.delete({
         where: {
-            id: 1
+            id: 8
         }
-    });
-    console.log(deleteComment);
+    })
+    console.log(comment)
 }
 
-// Поиск комментария по id
+async function findComment() {
+    const comment = await prisma.comment.findUnique({
+        where: {
+            id: 11
+        }
+    })
+    console.log(comment)
+}
+
 async function findCommentById() {
-    const findComment = await prisma.comment.findUnique({
+    const comment = await prisma.comment.findUnique({
         where: {
-            id: 1
+            id: 11
         }
-    });
-    console.log(findComment);
-}
-
-// Поиск комментария по id с выводом информации о посте
-async function findCommentWithPost() {
-    const findCommentWithPost = await prisma.comment.findUnique({
+    })
+    const post = await prisma.post.findUnique({
         where: {
-            id: 1
+            id: comment?.postId
         },
-        include: {
-            post: true
-        }
-    });
-    console.log(findCommentWithPost);
-}
 
-// Поиск поста по id с комментариями 
-async function findPostWithComments() {
-    const findPostWithComments = await prisma.post.findUnique({
-        where: {
-            id: 1
-        },
         include: {
             comments: true
         }
-    });
-    console.log(findPostWithComments);
+    })
 }
 
-// Обновление комментария
 async function updateComment() {
-    const updatedComment = await prisma.comment.update({
+
+    const coment = await prisma.comment.update({
         where: {
-            id: 1
+            id: 8
         },
+
         data: {
-            headline: "update commentariy"
+            body: 'Updated Coment!'
         }
-    });
-    console.log(updatedComment);
+    })
+    console.log(coment)
+}
+
+async function createUser(){
+    const user = await prisma.user.create({
+        data: {
+          id: 3,
+          username: "Test User",
+          email: "test3@gmail.com",
+          password: "qwerty",
+          role: "user"
+        }
+      });
+      console.log(user)
 }
 
 
 async function main() {
     // await createPost()
-    await createManyPosts()
+    // await createManyPosts()
     // await findPost()
     // const posts = await findManyPosts();
     // await console.log(posts.length)
     // await updatePost()
     // await deletePost()
-    // await createComment()
+    await createComment()
     // await createManyComments()
     // await deleteComment()
     // await findCommentById()
     // await findCommentWithPost()
     // await findPostWithComments()
     // await updateComment()
-
+    // await createUser()
+    // await createOneCategory()
 }
 
 main().then(() => {

@@ -1,8 +1,7 @@
 model Comment {
   id       Int     @id @default(autoincrement())
-  headline String 
+  title String 
   body     String 
-  src      String? 
   
   post     Post    @relation(fields: [postId], references: [id])
   postId   Int 
