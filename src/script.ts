@@ -26,6 +26,7 @@ app.use('/post/', router)
 app.use('/api/post/', postRouterApi)
 app.use('/api/category/', categoryRouter)
 app.use('/', userRouter)
+app.use('/auth', userRouter);
 
 
 function getDate(){

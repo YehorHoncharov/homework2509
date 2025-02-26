@@ -12,16 +12,15 @@ const HashPassword = async (password: string): Promise<string> => {
 
 async function findUserByEmail(email:string){
     try{
-        const user = await client.user.findUnique({
-            where:{
-                email: email
-            }
-        })
-        if (user === null || user === undefined){
-            return "not found"
-        } else {
-            return user
-        }
+        return await client.user.findUnique({
+            where: { email }
+        }) || null
+        // })
+        // if (user === null || user === undefined){
+        //     return "not found"
+        // } else {
+        //     return user
+        // }
         
     } catch(err){
         if (err instanceof PrismaClientKnownRequestError){
@@ -41,7 +40,7 @@ async function findUserByEmail(email:string){
 
 async function createUser(data: Prisma.UserCreateInput){
     try{
-        console.log(typeof(data.password))
+        // console.log(typeof(data.password))
         const user = await client.user.create({
             data: {
                 username: data.username,
@@ -66,7 +65,6 @@ async function createUser(data: Prisma.UserCreateInput){
         }
     }
 }
-
 
 
 const userRepository = {
