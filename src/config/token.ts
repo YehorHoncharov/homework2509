@@ -1,1 +1,1 @@
-export const SECRET_KEY = 'secret_key'
+export const SECRET_KEY = 'secret_key' // env

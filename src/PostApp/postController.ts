@@ -1,6 +1,6 @@
 // const productService = require('../services/productService')
 import postService from "./postService"
-
+// лишние импорты
 import express, { Express, Request, Response } from 'express'
 
 

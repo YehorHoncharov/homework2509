@@ -6,6 +6,7 @@ async function getAllPosts(){
         let posts = await client.post.findMany()
         return posts
     } catch(err){
+        // Тип
         if (err instanceof Prisma.PrismaClientKnownRequestError){
             if (err.code == 'P2002'){
                 console.log(err.message);
@@ -20,14 +21,17 @@ async function getPostById(id: number) {
     try {
         console.log(id)
         let post = await client.post.findUnique({
+            // 1? должен использовать id
             where: {id: 1}
         });
         return post;
     } catch (err) {
+        // тип
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
 
             if (err.code === 'P2002') {
                 console.error('ошибка P2002: нарушение уникальности.', err.message);
+                // throw не надо
                 throw err;
             }
 
@@ -102,12 +106,14 @@ async function getPostsCount(){
             console.error('неизвестная ошибка', err);
             throw err;
         }
+        // ?
         return 0
     }
 }
 
 
 export async function getAllPostsWithComments() {
+    // try catch
     return await client.post.findMany({
         include: {
             comments: true, 
@@ -116,6 +122,7 @@ export async function getAllPostsWithComments() {
 }
 
 export async function getPostWithComments(postId: number) {
+    // try catch
     return await client.post.findUnique({
         where: { id: postId },
         include: {

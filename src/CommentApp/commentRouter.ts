@@ -7,4 +7,5 @@ router.post('/create', commentController.createCommentForPost)
 router.get('/post/:postId', commentController.getCommentsByPostId)
 router.get('/user/:userId', commentController.getCommentsByUserId)
 
+// export default
 export {router as commentRouter}

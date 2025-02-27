@@ -1,9 +1,14 @@
+// тут лучше в принципе все переписать))
+// Для комментов нужен в принципе только один запрос это на пост с комментами
+// такой запрос есть в PostApp, поэтому в целом CommentApp не нужен
+// поэтому его переписать только под правильный код
 import { Request, Response } from 'express'
 import commentService from './commentService'
 
 
 
 async function getCommentsByPostId(req: Request, res: Response) {
+    // тоже NaN
     const postId: number = Number(req.params.id)
     const context = await commentService.getCommentsByPostId(postId)
 

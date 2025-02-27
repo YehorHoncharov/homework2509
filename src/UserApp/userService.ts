@@ -1,38 +1,52 @@
 // import { SECRET_KEY } from './../config/token';
+// не используешь импорт
 import { Prisma } from '@prisma/client'
 import userRepository from "./userRepository"
+// мимо с импортом *
 import * as bcrypt from 'bcrypt';
 import {CreateUser, User} from './types'
 import { IError, ISuccess } from '../globalTypes/globalTypes';
+// не используешь
 import jwt from 'jsonwebtoken';
+// import {sign} from 'jsonwebtoken';
 
 
 
 // const SECRET_KEY = process.env.SECRET_KEY 
+// Даниел украл все данные
 const SECRET_KEY = 'YwbslRsce'
-
+// почему с большой буквы
 async function ComparePassword(hash: string, password: string): Promise<boolean>{
     const isMatch = await bcrypt.compare(password, hash);
     return isMatch;
 }
-
+// типизацию для сервиса важно писать!
 async function findUserByEmail(email: string, password: string){
-    const user: any = await userRepository.findUserByEmail(email=email)
-    if (user instanceof String){
-        return user
-    } else {
-        const result = await ComparePassword(user.password, password)
-        if (result){
-            const new_user = {
-                username: user.username,
-                email: user.email,
-                role: user.role
-            }
-            return new_user
-        }
+    // any
+    const user = await userRepository.findUserByEmail(email=email)
+    // if (user instanceof String){
+    //     return user
+    // } else {
+    //     const result = await ComparePassword(user.password, password)
+    //     if (result){
+    //         const new_user = {
+    //             username: user.username,
+    //             email: user.email,
+    //             role: user.role
+    //         }
+    //         return new_user
+    //     }
+    // }
+    
+    if (!user) {
+        return  {status: 'error', message: 'User is not found'}
     }
-}
+    // if (!compare) return
+    
+    return {status: 'ok', data: user}
 
+}
+// не используешь 
 async function createUser(data: {username:string, email:string, password:string, hashedPassword: string}): Promise< IError | ISuccess<User> >{
     const user = await userRepository.findUserByEmail(data.email)
 
@@ -48,9 +62,8 @@ async function createUser(data: {username:string, email:string, password:string,
         
         return {status: 'error', message: 'user not found'}
 
-    } else {
-        return {status: 'success', message: "user exists"}
-    }
+    } 
+    return {status: 'success', message: "user exists"}
     
 }
 
@@ -82,7 +95,7 @@ async function register(data: CreateUser): Promise< IError | ISuccess<User>>{
     if (user) {
         return { status: "error", message: "User exists!"};
     }
-
+    
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const userData = {

@@ -1,5 +1,7 @@
-import { commentRepository } from "./commentRepository";
+// тоже самое
 
+import { commentRepository } from "./commentRepository";
+// не используешь
 import {Prisma} from '@prisma/client'
 import { CreateComment } from "./types";
 
