@@ -7,7 +7,7 @@ const submitButton = document.querySelector("#submitButton")
 
 formUser.addEventListener("submit", (event)=>{
     event.preventDefault();
-    fetch("", {
+    fetch("api/user/register", {
         method: "POST",
         body: JSON.stringify({
             username: usernameInput.value,

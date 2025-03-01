@@ -6,14 +6,15 @@ const submitButton = document.querySelector("#submitButton")
 
 formUser.addEventListener("submit", (event)=>{
     event.preventDefault();
-    fetch("", {
+    fetch("api/user/login", {
         method: "POST",
         body: JSON.stringify({
             email: emailInput.value,
             password: passwordInput.value
         }),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer: token'
         }
     })
 })

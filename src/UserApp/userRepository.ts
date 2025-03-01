@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 
 
 const HashPassword = async (password: string): Promise<string> => {
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     return hash;
 }
@@ -40,7 +40,6 @@ async function findUserByEmail(email:string){
 
 async function createUser(data: Prisma.UserCreateInput){
     try{
-        // console.log(typeof(data.password))
         const user = await client.user.create({
             data: {
                 username: data.username,

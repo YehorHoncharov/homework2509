@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 
 
 // const SECRET_KEY = process.env.SECRET_KEY 
-const SECRET_KEY = 'YwbslRsce'
+// const SECRET_KEY = 'YwbslRsce'
 
 async function ComparePassword(hash: string, password: string): Promise<boolean>{
     const isMatch = await bcrypt.compare(password, hash);
@@ -86,10 +86,8 @@ async function register(data: CreateUser): Promise< IError | ISuccess<User>>{
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const userData = {
-        username: data.username,
-        email: data.email,
-        password: hashedPassword,
-        role: "user"
+                ...data, 
+                password: hashedPassword
     }
 
     const newUser = await userRepository.createUser(userData);
