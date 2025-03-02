@@ -65,10 +65,34 @@ async function createUser(data: Prisma.UserCreateInput){
     }
 }
 
+async function getUserById(userId: number){
+    try{
+        let user = await client.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+        return user
+    } catch (error) {
+        if (error instanceof PrismaClientKnownRequestError){
+            if (error.code == 'P2002'){
+                console.log(error.message)
+                throw error
+            } else if (error.code == 'P2015'){
+                console.log(error.message)
+                throw error
+            } else if (error.code == 'P2019'){
+                console.log(error.message)
+                throw error
+            } 
+            }
+        }
+}
 
 const userRepository = {
     findUserByEmail: findUserByEmail,
-    createUser: createUser
+    createUser: createUser,
+    getUserById: getUserById
 }
 
 export default userRepository

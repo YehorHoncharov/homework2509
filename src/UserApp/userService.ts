@@ -100,12 +100,30 @@ async function register(data: CreateUser): Promise< IError | ISuccess<User>>{
 
 }
 
+async function getUserById(userId: number): Promise< IError | ISuccess<User> > {
+    const user = await userRepository.getUserById(userId)
+    
+    if(!user){
+        return {
+            status: 'error',
+            message: 'user not found'
+        }
+    }
+    
+    const userData = {
+        ...user,
+        password: '',
+    }
+    return {status: 'success', data: userData}
+}
+
 
 const userService = {
     findUserByEmail: findUserByEmail,
     createUser: createUser,
     login: login,
-    register: register
+    register: register,
+    getUserById: getUserById,
 }
 
 export default userService

@@ -64,11 +64,19 @@ async function Register(req: Request, res: Response){
     }
 };
 
+async function getUserById(req: Request, res: Response){
+    const userId = res.locals.userId
+    const result = await userService.getUserById(userId)
+    res.json(result)
+}
+
+
 const userController = {
     loginPage: loginPage,
     Login: Login,
     regPage: regPage,
-    Register: Register
+    Register: Register,
+    getUserById: getUserById,
 }
 
 
