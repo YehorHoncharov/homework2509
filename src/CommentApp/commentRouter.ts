@@ -1,10 +1,10 @@
-import express, { Router } from 'express'
-import commentController from './commentController'
+import { Router } from "express";
+import commentController from "./commentController";
 
-const router: Router = express.Router()
 
-router.post('/create', commentController.createCommentForPost)
-router.get('/post/:postId', commentController.getCommentsByPostId)
-router.get('/user/:userId', commentController.getCommentsByUserId)
+const commentRouter = Router();
 
-export {router as commentRouter}
+commentRouter.post("/create", commentController.createCommentForPost);
+commentRouter.get("/post/:postId", commentController.getPostWithComments);
+
+export default commentRouter

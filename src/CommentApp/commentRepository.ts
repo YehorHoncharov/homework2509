@@ -25,7 +25,7 @@ async function createCommentToPost(postId: number, data: CreateComment){
     try{
         let comment = client.comment.create({
             data: {
-                headline: 'comment',
+                title: 'comment',
                 body: "text body",
                 
                 postId: postId,

@@ -1,66 +1,37 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import client from '../client/prismaClient'
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import * as bcrypt from 'bcrypt';
+import { errors, IErrors } from "../globalTypes/errorCodes";
+import { CreateUser } from "./types";
 
-
-const HashPassword = async (password: string): Promise<string> => {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-    return hash;
-}
 
 async function findUserByEmail(email:string){
     try{
         return await client.user.findUnique({
             where: { email }
-        }) || null
-        // })
-        // if (user === null || user === undefined){
-        //     return "not found"
-        // } else {
-        //     return user
-        // }
+        })
         
-    } catch(err){
-        if (err instanceof PrismaClientKnownRequestError){
-            if (err.code == 'P2002'){
-                console.log(err.message)
-                throw err
-            } else if (err.code == 'P2015'){
-                console.log(err.message)
-                throw err
-            } else if (err.code == 'P2019'){
-                console.log(err.message)
-                throw err
-            } 
+    } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError){
+            if (error.code in Object.keys(errors)){
+                const errorKey: keyof IErrors = error.code
+                console.log(errors[errorKey])
+            }
         }
     }
 }
 
-async function createUser(data: Prisma.UserCreateInput){
+async function createUser(data: CreateUser){
     try{
         const user = await client.user.create({
-            data: {
-                username: data.username,
-                email: data.email,
-                password: await HashPassword(data.password),
-                role: data.role
-            }
+            data: data
         })
         return user
-    } catch(err){
-        if (err instanceof PrismaClientKnownRequestError){
-            if (err.code == 'P2002'){
-                console.log(err.message)
-                throw err
-            } else if (err.code == 'P2015'){
-                console.log(err.message)
-                throw err
-            } else if (err.code == 'P2019'){
-                console.log(err.message)
-                throw err
-            } 
+    } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError){
+            if (error.code in Object.keys(errors)){
+                const errorKey: keyof IErrors = error.code
+                console.log(errors[errorKey])
+            }
         }
     }
 }
@@ -70,21 +41,19 @@ async function getUserById(userId: number){
         let user = await client.user.findUnique({
             where: {
                 id: userId
+            },
+            include: {
+                posts: true,
+                comments: true,
             }
         })
         return user
     } catch (error) {
-        if (error instanceof PrismaClientKnownRequestError){
-            if (error.code == 'P2002'){
-                console.log(error.message)
-                throw error
-            } else if (error.code == 'P2015'){
-                console.log(error.message)
-                throw error
-            } else if (error.code == 'P2019'){
-                console.log(error.message)
-                throw error
-            } 
+            if (error instanceof Prisma.PrismaClientKnownRequestError){
+                if (error.code in Object.keys(errors)){
+                    const errorKey: keyof IErrors = error.code
+                    console.log(errors[errorKey])
+                }
             }
         }
 }
@@ -92,7 +61,7 @@ async function getUserById(userId: number){
 const userRepository = {
     findUserByEmail: findUserByEmail,
     createUser: createUser,
-    getUserById: getUserById
+    getUserById: getUserById,
 }
 
 export default userRepository

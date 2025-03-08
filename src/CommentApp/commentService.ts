@@ -1,6 +1,4 @@
 import { commentRepository } from "./commentRepository";
-
-import {Prisma} from '@prisma/client'
 import { CreateComment } from "./types";
 
 async function getCommentsByPostId(postId: number) {

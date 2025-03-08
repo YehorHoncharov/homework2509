@@ -9,7 +9,7 @@ async function getAllPosts(){
         if (err instanceof Prisma.PrismaClientKnownRequestError){
             if (err.code == 'P2002'){
                 console.log(err.message);
-                throw err;
+
             }
         }
     }
@@ -20,7 +20,8 @@ async function getPostById(id: number) {
     try {
         console.log(id)
         let post = await client.post.findUnique({
-            where: {id: 1}
+            // 1? должен использовать id
+            where: {id: id}
         });
         return post;
     } catch (err) {
@@ -28,21 +29,17 @@ async function getPostById(id: number) {
 
             if (err.code === 'P2002') {
                 console.error('ошибка P2002: нарушение уникальности.', err.message);
-                throw err;
             }
 
             if (err.code === 'P2015') {
                 console.error('ошибка P2015: запись не найдена.', err.message);
-                throw err;
             }
 
             if (err.code === 'P2019') {
                 console.error('ошибка P2019: поле не существует.', err.message);
-                throw err;
             }
         } else {
             console.error('неизвестная ошибка', err);
-            throw err;
         }
     }
 }
@@ -58,21 +55,20 @@ async function createPost(data: Prisma.PostCreateInput){
 
             if (err.code === 'P2002') {
                 console.error('ошибка P2002: нарушение уникальности.', err.message);
-                throw err;
+
             }
 
             if (err.code === 'P2015') {
                 console.error('ошибка P2015: запись не найдена.', err.message);
-                throw err;
+
             }
 
             if (err.code === 'P2019') {
                 console.error('ошибка P2019: поле не существует.', err.message);
-                throw err;
+
             }
         } else {
             console.error('неизвестная ошибка', err);
-            throw err;
         }
     }
 }
@@ -86,42 +82,86 @@ async function getPostsCount(){
 
             if (err.code === 'P2002') {
                 console.error('ошибка P2002: нарушение уникальности.', err.message);
-                throw err;
+
             }
 
             if (err.code === 'P2015') {
                 console.error('ошибка P2015: запись не найдена.', err.message);
-                throw err;
+
             }
 
             if (err.code === 'P2019') {
                 console.error('ошибка P2019: поле не существует.', err.message);
-                throw err;
+
             }
         } else {
             console.error('неизвестная ошибка', err);
-            throw err;
         }
-        return 0
     }
 }
 
 
 export async function getAllPostsWithComments() {
-    return await client.post.findMany({
-        include: {
-            comments: true, 
-        },
-    });
+    try{
+        return await client.post.findMany({
+            include: {
+                comments: true, 
+            },
+        });
+    } catch (err){
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+
+            if (err.code === 'P2002') {
+                console.error('ошибка P2002: нарушение уникальности.', err.message);
+
+            }
+
+            if (err.code === 'P2015') {
+                console.error('ошибка P2015: запись не найдена.', err.message);
+
+            }
+
+            if (err.code === 'P2019') {
+                console.error('ошибка P2019: поле не существует.', err.message);
+
+            }
+        } else {
+            console.error('неизвестная ошибка', err);
+        }
+    }
+    
 }
 
 export async function getPostWithComments(postId: number) {
-    return await client.post.findUnique({
-        where: { id: postId },
-        include: {
-            comments: true,
-        },
-    });
+    try{
+        return await client.post.findUnique({
+            where: { id: postId },
+            include: {
+                comments: true,
+            },
+        });
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+
+            if (err.code === 'P2002') {
+                console.error('ошибка P2002: нарушение уникальности.', err.message);
+
+            }
+
+            if (err.code === 'P2015') {
+                console.error('ошибка P2015: запись не найдена.', err.message);
+
+            }
+
+            if (err.code === 'P2019') {
+                console.error('ошибка P2019: поле не существует.', err.message);
+
+            }
+        } else {
+            console.error('неизвестная ошибка', err);
+        }
+    }
+    
 }
 
 

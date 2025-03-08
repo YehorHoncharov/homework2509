@@ -2,13 +2,13 @@ import { Router } from 'express'
 import { authMiddleware } from '../middlewares/authMiddleware'
 import { userRoleMiddleware } from '../middlewares/userRoleMiddleware'
 import postControllers from './postController'
-const router = Router()
 
+const postRouter = Router()
 
-router.get("/all", postControllers.getAllPosts)
+postRouter.get("/all", postControllers.getAllPosts)
 
-router.get("/:id", postControllers.getPostById)
+postRouter.get("/:id", postControllers.getPostById)
 
-router.post('/create', authMiddleware, userRoleMiddleware, postControllers.createPost)
+postRouter.post('/create', authMiddleware, userRoleMiddleware, postControllers.createPost)
 
-export { router }
+export default postRouter

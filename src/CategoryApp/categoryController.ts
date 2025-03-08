@@ -1,14 +1,13 @@
-import express, { Express, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import categoryService from './categoryService'
 
 
 async function getAllCategories(req:Request, res:Response) {
-    const context = await categoryService.getAllCategories()
-    if (context.status == 'error'){
-        res.send('error');
+    const result = await categoryService.getAllCategories()
+    if (result.status == 'error'){
+        res.json({ status: 'error', message: 'Categories not found'})
     } else {
-        res.send('ok')
-        console.log(context)
+        res.json({ status: 'success', message: 'all good'})
     }
 }
 

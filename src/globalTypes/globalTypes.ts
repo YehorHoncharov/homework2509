@@ -1,10 +1,9 @@
 export interface IError {
-    status: 'error',
+    status: 'error'
     message: string
 }
 
 export interface ISuccess<T>{
-    status: 'success',
-    data?: T,
-    message?: string
+    status: 'success'
+    data: T
 }

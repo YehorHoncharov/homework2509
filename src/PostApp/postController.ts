@@ -1,7 +1,5 @@
-// const productService = require('../services/productService')
 import postService from "./postService"
-
-import express, { Express, Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 
 async function getAllPosts(req:Request, res:Response) {
@@ -22,7 +20,7 @@ async function getPostById(req:Request, res:Response){
         res.render('post', {post: result.data})
     }
 }
-// 
+
 async function createPost(req:Request, res:Response){
     const data = req.body
     console.log(data)
